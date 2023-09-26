@@ -6,7 +6,7 @@
 /*   By: tpetros <tpetros@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:29:12 by tpetros           #+#    #+#             */
-/*   Updated: 2023/09/22 20:33:50 by tpetros          ###   ########.fr       */
+/*   Updated: 2023/09/26 19:45:29 by tpetros          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ Account::Account( int initial_deposit )
 			  << this->_amount << ";created" << std::endl;
 	_totalAmount = _totalAmount + this->_amount;
 	_nbAccounts++;
+	
 }
 
 Account::~Account()
@@ -80,11 +81,12 @@ void	Account::makeDeposit( int deposit )
 	tmp = this->_amount;
 	this->_amount += deposit;
 	Account::_totalNbDeposits++;
+	_totalAmount += deposit;
 	_displayTimestamp();
+	this->_nbDeposits++;
 	std::cout <<  " index:"<< this->_accountIndex << ";p_amount:" << tmp
 			  << ";deposit:" << deposit << ";amount:" << this->_amount 
 			  << ";nb_deposits:" << this->_nbDeposits << std::endl;
-	this->_nbDeposits++;
 }
 
 bool	Account::makeWithdrawal( int withdrawal ) 
@@ -96,6 +98,7 @@ bool	Account::makeWithdrawal( int withdrawal )
 		this->_amount -= withdrawal;
 		this->_nbWithdrawals++;
 		_totalNbWithdrawals++;
+		_totalAmount -= withdrawal;
 		_displayTimestamp();
 		std::cout <<  " index:"<< this->_accountIndex << ";p_amount:" << tmp
 			  << ";withdrawal:" << withdrawal << ";amount:" << this->_amount 
@@ -105,7 +108,7 @@ bool	Account::makeWithdrawal( int withdrawal )
 	else
 	{
 		_displayTimestamp();
-		std::cout <<  " index:" << this->_accountIndex << ";p_amount" << tmp
+		std::cout <<  " index:" << this->_accountIndex << ";p_amount:" << tmp
 			  << ";withdrawal:refused" << std::endl;
 		return (false);
 	}
@@ -129,7 +132,7 @@ void	Account::displayStatus(void) const
 {
 	_displayTimestamp();
 	std::cout <<  " index:"<< this->_accountIndex << ";amount:"
-			  << this->_amount << ";deposits" << this->_nbDeposits
+			  << this->_amount << ";deposits:" << this->_nbDeposits
 			  << ";withdrawals:" << this->_nbWithdrawals << std::endl;
 }
 
